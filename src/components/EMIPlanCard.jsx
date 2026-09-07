@@ -1,8 +1,8 @@
 export default function EMIPlanCard({ plan, productPrice, selected = false, onSelect }) {
-  const monthlyAmount = plan.amount
+  const monthlyAmount = plan.amount ?? plan.monthlyAmount ?? 0
   const months = plan.months
-  const totalPayable = monthlyAmount * months
-  const isNoCost = plan.isNoCost
+  const totalPayable = plan.totalAmount ?? plan.totalPayable ?? monthlyAmount * months
+  const isNoCost = plan.isNoCost ?? (plan.type === 'No-cost EMI')
   const extraPaid = totalPayable - productPrice
 
   return (

@@ -57,8 +57,11 @@ export default function OrderSummary() {
     )
   }
 
-  const { product, variant, variantSummary, price, emiPlan } = state
-  const totalPayable = emiPlan.amount * emiPlan.months
+  const { product, variantSummary, price, emiPlan } = state
+  const emiMonthly = emiPlan.amount ?? emiPlan.monthlyAmount ?? 0
+  const emiIsNoCost = emiPlan.isNoCost ?? (emiPlan.type === 'No-cost EMI')
+  const totalPayable =
+    emiPlan.totalAmount ?? emiPlan.totalPayable ?? emiMonthly * emiPlan.months
   const interest = totalPayable - price
   const [imgError, setImgError] = useState(false)
 
@@ -73,7 +76,7 @@ export default function OrderSummary() {
   return (
     <div className="app-shell">
       <div className="shop-page pd-page">
-        <div className="shop-content pd-content">
+        <div className="shop-content pd-content pd-order-layout">
           <button
             type="button"
             className="product-back-btn"
@@ -150,7 +153,7 @@ export default function OrderSummary() {
               <div className="os-emi-row">
                 <span className="os-emi-label">Monthly EMI</span>
                 <span className="os-emi-value os-emi-amount">
-                  ₹{emiPlan.amount.toLocaleString('en-IN')}
+                  ₹{emiMonthly.toLocaleString('en-IN')}
                 </span>
               </div>
               <div className="os-emi-row">
@@ -159,8 +162,8 @@ export default function OrderSummary() {
               </div>
               <div className="os-emi-row">
                 <span className="os-emi-label">Plan type</span>
-                <span className={`os-emi-tag ${emiPlan.isNoCost ? 'nocost' : 'interest'}`}>
-                  {emiPlan.isNoCost ? 'No-cost EMI' : 'Standard EMI'}
+                <span className={`os-emi-tag ${emiIsNoCost ? 'nocost' : 'interest'}`}>
+                  {emiIsNoCost ? 'No-cost EMI' : 'Standard EMI'}
                 </span>
               </div>
               <div className="os-emi-row os-emi-total-row">
@@ -169,7 +172,7 @@ export default function OrderSummary() {
                   ₹{totalPayable.toLocaleString('en-IN')}
                 </span>
               </div>
-              {!emiPlan.isNoCost && interest > 0 && (
+              {!emiIsNoCost && interest > 0 && (
                 <div className="os-emi-row">
                   <span className="os-emi-label">Interest</span>
                   <span className="os-emi-value os-emi-interest">
@@ -192,10 +195,10 @@ export default function OrderSummary() {
                 </div>
                 <div className="os-breakdown-row">
                   <span className="os-breakdown-label">
-                    {emiPlan.isNoCost ? 'EMI processing' : 'Interest charges'}
+                    {emiIsNoCost ? 'EMI processing' : 'Interest charges'}
                   </span>
                   <span className="os-breakdown-value">
-                    {emiPlan.isNoCost
+                    {emiIsNoCost
                       ? '₹0'
                       : `₹${interest.toLocaleString('en-IN')}`}
                   </span>
@@ -222,7 +225,7 @@ export default function OrderSummary() {
               <>
                 <span className="pd-cta-label">x {emiPlan.months} months</span>
                 <span className="pd-cta-price">
-                  ₹{emiPlan.amount.toLocaleString('en-IN')}/mo
+                  ₹{emiMonthly.toLocaleString('en-IN')}/mo
                 </span>
               </>
             )}

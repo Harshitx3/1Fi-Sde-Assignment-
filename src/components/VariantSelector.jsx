@@ -3,10 +3,22 @@ import { useMemo } from 'react'
 export default function VariantSelector({ variants, selectedIndex = 0, onChange }) {
   const attributeGroups = useMemo(() => {
     if (!variants || variants.length === 0) return []
+    const internalKeys = new Set([
+      'id',
+      'price',
+      'image',
+      'gallery',
+      'emiPlans',
+      'colorHex',
+    ])
     const keys = new Set()
     variants.forEach((v) => {
       Object.keys(v).forEach((k) => {
-        if (k !== 'price') keys.add(k)
+        const value = v[k]
+        if (internalKeys.has(k)) return
+        if (typeof value === 'object' && value !== null) return
+        if (Array.isArray(value)) return
+        keys.add(k)
       })
     })
 
@@ -67,15 +79,16 @@ export default function VariantSelector({ variants, selectedIndex = 0, onChange 
           <div className="variant-options">
             {group.options.map((option) => {
               const isSelected = selectedVariant && selectedVariant[group.key] === option
+              const optionKey = `${group.key}-${String(option)}`
               return (
                 <button
-                  key={option}
+                  key={optionKey}
                   type="button"
                   className={`variant-option ${isSelected ? 'selected' : ''}`}
                   onClick={() => handleSelect(group.key, option)}
                   aria-pressed={isSelected}
                 >
-                  {option}
+                  {String(option)}
                   {isSelected && (
                     <svg
                       className="variant-option-check"

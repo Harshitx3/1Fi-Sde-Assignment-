@@ -468,7 +468,8 @@
 /* ---------- Product Card ---------- */
 .product-card {
   display: flex;
-  gap: 14px;
+  flex-direction: column;
+  gap: 12px;
   padding: 14px;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -483,9 +484,8 @@
 }
 
 .product-media {
-  width: 110px;
-  height: 110px;
-  flex-shrink: 0;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   border-radius: var(--radius-sm);
   background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
   position: relative;
@@ -504,7 +504,7 @@
 }
 
 .product-media-fallback {
-  font-size: 28px;
+  font-size: 48px;
   font-weight: 800;
   color: var(--color-purple-600);
 }
@@ -513,11 +513,11 @@
   position: absolute;
   top: 8px;
   left: 8px;
-  padding: 3px 8px;
+  padding: 4px 10px;
   background: var(--color-purple-600);
   color: #ffffff;
   border-radius: 4px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.3px;
   line-height: 1;
@@ -528,11 +528,11 @@
   position: absolute;
   top: 8px;
   right: 8px;
-  padding: 3px 8px;
+  padding: 4px 10px;
   background: #dc2626;
   color: #ffffff;
   border-radius: 4px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.3px;
   line-height: 1;
@@ -1720,8 +1720,557 @@
   color: var(--color-purple-700);
 }
 
+/* ------- Image Gallery ------- */
+.pd-image-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.pd-gallery-thumbs {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: thin;
+}
+
+.pd-gallery-thumbs::-webkit-scrollbar {
+  height: 4px;
+}
+
+.pd-gallery-thumbs::-webkit-scrollbar-track {
+  background: var(--color-border-light);
+  border-radius: 2px;
+}
+
+.pd-gallery-thumbs::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 2px;
+}
+
+.pd-gallery-thumb {
+  flex-shrink: 0;
+  width: 68px;
+  height: 68px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  overflow: hidden;
+  padding: 0;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pd-gallery-thumb:hover {
+  border-color: var(--color-purple-400);
+}
+
+.pd-gallery-thumb.active {
+  border-color: var(--color-purple-600);
+  box-shadow: 0 0 0 2px rgba(147, 51, 234, 0.12);
+}
+
+.pd-gallery-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pd-gallery-thumb-fallback {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--color-purple-400);
+  background: var(--color-purple-50);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ------- Customer Details Form ------- */
+.pd-customer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pd-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pd-form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.pd-form-required {
+  color: #dc2626;
+}
+
+.pd-form-input {
+  padding: 12px 14px;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  color: var(--color-text);
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.pd-form-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.pd-form-input:hover {
+  border-color: var(--color-purple-300);
+}
+
+.pd-form-input:focus {
+  border-color: var(--color-purple-600);
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+}
+
+.pd-form-input.error {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.08);
+}
+
+.pd-form-error {
+  font-size: 12px;
+  font-weight: 500;
+  color: #dc2626;
+  line-height: 1.4;
+}
+
+.pd-empty-msg {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  padding: 8px 0;
+}
+
+/* ------- Purchase Success State ------- */
+.pd-success-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding: 32px 20px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  animation: success-card-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.pd-success-icon-wrap {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #dcfce7;
+  color: #16a34a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+  animation: success-icon-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+.pd-success-icon {
+  width: 44px;
+  height: 44px;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: success-check-draw 0.5s ease-out 0.35s forwards;
+}
+
+.pd-success-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.pd-success-subtitle {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+  max-width: 420px;
+}
+
+.pd-success-product-name {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.pd-success-variant {
+  color: var(--color-text-secondary);
+}
+
+.pd-success-emi-box {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  background: var(--color-purple-50);
+  border: 1px solid var(--color-purple-100);
+  border-radius: var(--radius-md);
+  margin-top: 4px;
+}
+
+.pd-success-emi-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pd-success-emi-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.pd-success-emi-amount {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--color-purple-700);
+}
+
+.pd-success-emi-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.pd-success-emi-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.pd-success-emi-tag.nocost {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.pd-success-emi-tag.standard {
+  background: var(--color-purple-100);
+  color: var(--color-purple-700);
+}
+
+.pd-success-contact {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+  max-width: 400px;
+  margin-top: 4px;
+}
+
+.pd-success-btn {
+  margin-top: 8px;
+  padding: 12px 28px;
+  background: var(--color-purple-600);
+  color: #ffffff;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.15s ease;
+  min-height: 44px;
+}
+
+.pd-success-btn:hover {
+  background: var(--color-purple-700);
+  box-shadow: 0 4px 12px rgba(147, 51, 234, 0.28);
+}
+
+/* ------- Success Animations ------- */
+@keyframes success-card-in {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes success-icon-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  60% {
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes success-check-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 @media (max-width: 440px) {
   .pd-cta-bar {
     max-width: 100%;
+  }
+
+  .pd-gallery-thumb {
+    width: 58px;
+    height: 58px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE: TABLET & DESKTOP (>= 768px)
+   ========================================================= */
+@media (min-width: 768px) {
+  /* ---------- Global layout unlock ---------- */
+  .app-shell {
+    max-width: 100%;
+    box-shadow: none;
+    background: transparent;
+    padding-bottom: 0;
+  }
+
+  .shop-page {
+    background: var(--color-surface);
+    border-radius: 0;
+  }
+
+  .shop-content {
+    padding: 24px 32px;
+    gap: 24px;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  /* ---------- Bottom navigation & fixed CTA bars ---------- */
+  .bottom-nav {
+    max-width: 100%;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .pd-cta-bar {
+    max-width: 100%;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  /* ---------- Promo banner ---------- */
+  .promo-banner {
+    padding: 32px 28px;
+  }
+
+  .promo-banner-title {
+    font-size: 30px;
+  }
+
+  /* ---------- Section headings ---------- */
+  .section-heading-title {
+    font-size: 19px;
+  }
+
+  /* ---------- Marketplace layout ---------- */
+  .marketplace-hero-title {
+    font-size: 22px;
+  }
+
+  /* ---------- Product grid: 2 columns on tablet ---------- */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  /* ---------- Product Detail: 2-column layout ---------- */
+  .pd-product-layout {
+    display: grid;
+    grid-template-columns: minmax(320px, 1fr) minmax(380px, 1.2fr);
+    grid-template-areas:
+      "back    back"
+      "images  info"
+      "images  specs"
+      "images  variants"
+      "images  emi"
+      "images  customer";
+    grid-template-rows: auto auto auto auto auto 1fr;
+    gap: 24px 36px;
+    align-items: start;
+  }
+
+  .pd-product-layout > .product-back-btn {
+    grid-area: back;
+    justify-self: start;
+  }
+
+  .pd-product-layout > .pd-image-section {
+    grid-area: images;
+    position: sticky;
+    top: 24px;
+    max-width: 520px;
+    align-self: start;
+  }
+
+  .pd-product-layout > .pd-image-section > .pd-image-wrap {
+    position: static;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .pd-product-layout > .pd-info-section {
+    grid-area: info;
+    margin: 0;
+  }
+
+  /* Sections after info (specs, variants, emi, customer) flow in the right column */
+  .pd-product-layout > .pd-section {
+    grid-column: 2;
+    margin: 0;
+  }
+
+  /* ---------- Order Summary: single column, readable width ---------- */
+  .pd-order-layout {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .pd-page {
+    padding-bottom: calc(var(--bottom-nav-height) + 120px);
+  }
+
+  .pd-info-section .pd-name {
+    font-size: 22px;
+  }
+
+  .pd-info-section .pd-price {
+    font-size: 30px;
+  }
+
+  /* ---------- Success card sizing ---------- */
+  .pd-success-card {
+    padding: 48px 32px;
+  }
+
+  .pd-success-title {
+    font-size: 26px;
+  }
+
+  /* ---------- Order summary ---------- */
+  .os-title {
+    font-size: 26px;
+  }
+
+  .os-header {
+    max-width: none;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE: DESKTOP (>= 1024px)
+   ========================================================= */
+@media (min-width: 1024px) {
+  .shop-content {
+    padding: 32px 48px;
+    gap: 28px;
+  }
+
+  .bottom-nav {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .pd-cta-bar {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .promo-banner {
+    padding: 36px 32px;
+  }
+
+  .promo-banner-title {
+    font-size: 34px;
+  }
+
+  /* ---------- Product grid: 3 columns ---------- */
+  .product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  /* ---------- Product detail: wider columns ---------- */
+  .pd-product-layout {
+    grid-template-columns: minmax(400px, 1fr) minmax(440px, 1.2fr);
+    gap: 32px 48px;
+  }
+
+  .pd-product-layout > .pd-image-section {
+    max-width: 560px;
+  }
+
+  .pd-info-section .pd-name {
+    font-size: 24px;
+  }
+
+  .pd-info-section .pd-price {
+    font-size: 32px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE: LARGE DESKTOP (>= 1440px)
+   ========================================================= */
+@media (min-width: 1440px) {
+  .shop-content {
+    padding: 36px 64px;
+    max-width: 1600px;
+  }
+
+  .bottom-nav {
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+
+  .pd-cta-bar {
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+
+  /* ---------- Product grid: 4 columns ---------- */
+  .product-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .pd-product-layout {
+    grid-template-columns: minmax(440px, 1fr) minmax(520px, 1.2fr);
+    gap: 40px 64px;
+  }
+
+  .pd-product-layout > .pd-image-section {
+    max-width: 600px;
   }
 }

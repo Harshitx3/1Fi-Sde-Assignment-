@@ -5,15 +5,26 @@ export default function ProductCard({ product }) {
   const [imgError, setImgError] = useState(false)
   const navigate = useNavigate()
 
-  const startingEmi = product.emiPlans
-    ? product.emiPlans.reduce((min, plan) =>
-        plan.amount < min.amount ? plan : min
-      )
-    : { amount: Math.round(product.price / 12), months: 12, isNoCost: true }
+  const firstVariant = product.variants?.[0]
+  const variantEmiPlans = firstVariant?.emiPlans || []
+  const allEmiPlans = product.emiPlans && product.emiPlans.length > 0 ? product.emiPlans : variantEmiPlans
+  const referencePrice = firstVariant?.price ?? product.price
 
-  const hasDiscount = product.originalPrice && product.originalPrice > product.price
+  const startingEmi =
+    allEmiPlans.length > 0
+      ? allEmiPlans.reduce(
+          (min, plan) => {
+            const planAmount = plan.amount ?? plan.monthlyAmount ?? Infinity
+            const minAmount = min.amount ?? min.monthlyAmount ?? Infinity
+            return planAmount < minAmount ? plan : min
+          },
+          allEmiPlans[0]
+        )
+      : { amount: Math.round(referencePrice / 12), months: 12, isNoCost: true }
+
+  const hasDiscount = product.originalPrice && product.originalPrice > referencePrice
   const discountPercent = hasDiscount
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+    ? Math.round(((product.originalPrice - referencePrice) / product.originalPrice) * 100)
     : 0
 
   const handleViewDetails = () => {
@@ -39,7 +50,7 @@ export default function ProductCard({ product }) {
         {hasDiscount && (
           <span className="product-media-discount">-{discountPercent}%</span>
         )}
-        {startingEmi.isNoCost && (
+        {(startingEmi.isNoCost ?? (startingEmi.type === 'No-cost EMI')) && (
           <span className="product-media-badge">No Cost EMI</span>
         )}
       </div>
@@ -60,7 +71,7 @@ export default function ProductCard({ product }) {
 
         <div className="product-price-row">
           <span className="product-price">
-            ₹{product.price.toLocaleString('en-IN')}
+            ₹{referencePrice.toLocaleString('en-IN')}
           </span>
           {hasDiscount && (
             <span className="product-original-price">
@@ -72,7 +83,7 @@ export default function ProductCard({ product }) {
         <div className="product-emi">
           <span className="product-emi-label">EMI starts at</span>
           <span className="product-emi-value">
-            ₹{startingEmi.amount.toLocaleString('en-IN')}/mo
+            ₹{(startingEmi.amount ?? startingEmi.monthlyAmount ?? 0).toLocaleString('en-IN')}/mo
           </span>
           <span className="product-emi-tenure">· {startingEmi.months} months</span>
         </div>

@@ -34,7 +34,7 @@ export default function EMIPlanList({ plans = [], productPrice, selectedIndex, o
     <div className="emi-plan-list" role="radiogroup" aria-label="Select EMI plan">
       {plans.map((plan, index) => (
         <EMIPlanCard
-          key={`${plan.months}-${plan.amount}-${index}`}
+          key={plan.id || `${plan.months}-${plan.amount || plan.monthlyAmount}-${index}`}
           plan={plan}
           productPrice={productPrice}
           selected={selectedIndex === index}

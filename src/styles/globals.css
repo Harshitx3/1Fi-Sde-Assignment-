@@ -42,15 +42,24 @@ html, body {
 }
 
 body {
-  display: flex;
-  justify-content: center;
+  display: block;
 }
 
 #root {
   width: 100%;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
+  display: block;
+}
+
+@media (max-width: 767px) {
+  body {
+    display: flex;
+    justify-content: center;
+  }
+  #root {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 a {
