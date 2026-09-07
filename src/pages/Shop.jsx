@@ -2,19 +2,19 @@ import { useState } from 'react'
 import '../styles/Shop.css'
 import PromoBanner from '../components/PromoBanner.jsx'
 import TabNav from '../components/TabNav.jsx'
-import ThemeToggle from '../components/ThemeToggle.jsx'
 import Marketplace from './Marketplace.jsx'
+import ThemeToggle from '../components/ThemeToggle.jsx'
 
-const TABS = ['Top Brands', 'Nearby Stores', '1Fi Marketplace']
+const TABS = ['Top Brands', 'Nearby Stores', 'Marketplace']
 
 export default function Shop() {
-  const [activeTab, setActiveTab] = useState('1Fi Marketplace')
+  const [activeTab, setActiveTab] = useState('Marketplace')
 
   return (
     <div className="app-shell">
       <div className="shop-page">
         <div className="shop-content">
-          <div className="shop-top-bar">
+          <div className="shop-top-row">
             <PromoBanner />
             <ThemeToggle />
           </div>
@@ -25,7 +25,7 @@ export default function Shop() {
             onChange={setActiveTab}
           />
 
-          {activeTab === '1Fi Marketplace' ? <Marketplace /> : null}
+          {activeTab === 'Marketplace' && <Marketplace />}
         </div>
       </div>
     </div>

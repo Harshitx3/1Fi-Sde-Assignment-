@@ -35,7 +35,7 @@ export default function Marketplace() {
     <div className="marketplace">
       <section className="marketplace-hero">
         <div className="marketplace-hero-top">
-          <span className="marketplace-hero-pill">1Fi Marketplace</span>
+          <span className="marketplace-hero-pill">Marketplace</span>
           <span className="marketplace-hero-count">
             {loading ? '...' : `${marketplaceProducts.length} products`}
           </span>

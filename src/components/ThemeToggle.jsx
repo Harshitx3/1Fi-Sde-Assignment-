@@ -12,7 +12,7 @@ function setThemeOnDocument(theme) {
   try {
     localStorage.setItem('1fi-theme', theme)
   } catch (e) {
-    /* localStorage unavailable — ignore */
+    /* ignore */
   }
 }
 
@@ -22,11 +22,6 @@ function getInitialTheme() {
     if (stored === 'dark' || stored === 'light') return stored
   } catch (e) {
     /* ignore */
-  }
-  if (typeof window !== 'undefined' && window.matchMedia) {
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark'
-    }
   }
   return 'light'
 }
